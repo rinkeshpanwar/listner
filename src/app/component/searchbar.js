@@ -16,7 +16,7 @@ function Searchbar({onSearch}) {
                         value={search}
                         onChange={(e) => setSearch(e.target.value)}
                         autoComplete='off'
-                        className='w-full border-2 border-indigo-600 outline-none px-3 h-12 '
+                        className='w-full border-2 border-indigo-600 outline-none px-3 h-12 font-primary'
                         placeholder='How to setup node js in windows 10?'
                         />
                     <Button type="submit" className='border-none hover:border-none text-indigo-700'>
