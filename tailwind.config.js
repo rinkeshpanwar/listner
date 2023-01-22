@@ -7,6 +7,10 @@ module.exports = {
         primary: "'Roboto Slab', serif",
         secondary: "'Ubuntu', sans-serif",
       },
+      colors: {
+        primary_black: "#1F1F1F",
+        primary_white: "#F1F1F1"
+      }
     },
   },
   plugins: [

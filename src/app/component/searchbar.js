@@ -3,11 +3,14 @@ import { Button, ButtonGroup, Typography } from '@mui/material'
 import  {BiSearchAlt} from 'react-icons/bi'
 import { Box } from '@mui/system';
 
-function Searchbar() {
+function Searchbar({onSearch}) {
     const [search,setSearch] = React.useState('');
     return (
         <div className='w-1/2'>
-            <form onSubmit={() => alert(search)} >
+            <form onSubmit={(e) => {
+                e.preventDefault();
+                onSearch(search);
+            }} >
                 <ButtonGroup className='w-full bg-indigo-200'>
                     <input type="text"
                         value={search}
@@ -21,7 +24,7 @@ function Searchbar() {
                     </Button>
                 </ButtonGroup>
                 <Box>
-                    <Typography  className='font-secondary mt-1 font-medium'>
+                    <Typography  className='font-secondary mt-1 font-medium text-primary_black'>
                         Search for your question...
                     </Typography>
                 </Box>
