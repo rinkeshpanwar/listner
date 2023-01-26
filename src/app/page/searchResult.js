@@ -3,6 +3,7 @@ import React from 'react'
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import SearchCard from '../component/searchCard';
+import SearchLoader, { SkeleotonPopularQuestion } from '../component/searchLoader';
 import { Paths } from '../route/paths';
 
 function SearchResult() {
@@ -10,12 +11,11 @@ function SearchResult() {
     const searchState = useSelector((state) => state.search);
     const navigate = useNavigate();
 
-    // React.useEffect(() => {
-    //     if (searchState.search === "") {
-    //         navigate(Paths.HOME);
-    //     }
-    // });
-
+    React.useEffect(() => {
+        if (searchState.search === "") {
+            navigate(Paths.HOME);
+        }
+    });
     return (
         <div className='w-full'>
             <div className='flex justify-between font-primary px-10 mt-10'>
@@ -29,27 +29,32 @@ function SearchResult() {
                     </div>
                 </Modal>
             </div>
-            <div className='flex pr-10 lg:pr-0 pl-10 mt-5 gap-4 lg:gap-10 flex-wrap-reverse lg:flex-nowrap'>
+            <div className='flex pr-10 lg:pr-0 pl-10 mt-5 gap-4 lg:gap-10 flex-wrap lg:flex-nowrap'>
                 <div className='lg:w-[83%] space-y-8'>
-                    <SearchCard />
-                    <SearchCard />
-                    <SearchCard />
-                    <SearchCard />
-                    <SearchCard />
-                    <SearchCard />
+                    {
+                        searchState.loading ?
+                            Array(6).fill(0).map((_, index) => <SearchLoader key={index+"_loader"} />)
+                            : <SearchCard />
+                    }
                 </div>
                 <div className='w-full lg:w-[27%]'>
                     <div className='font-primary mt-2 font-medium text-lg'>Popular questions</div>
                     <div className='font-secondary lg:mt-3 space-y-2 font-light text-zinc-800'>
-                        <div className='line-clamp-3'>
-                           What is the best way to learn react?
-                        </div>
-                        <div className='line-clamp-3'>
-                           What is the best way to learn react?
-                        </div>
-                        <div className='line-clamp-3'>
-                           What is the best way to learn react?
-                        </div>
+                        {
+                            searchState.loading ?
+                                Array(10).fill(0).map((_, index) => <SkeleotonPopularQuestion key={index+"_skeleoton_popular_question"} />)
+                                : <>  
+                                    <div className='line-clamp-3'>
+                                    What is the best way to learn react?
+                                    </div>
+                                    <div className='line-clamp-3'>
+                                    What is the best way to learn react?
+                                    </div>
+                                    <div className='line-clamp-3'>
+                                    What is the best way to learn react?
+                                    </div>
+                                </>
+                        }
                     </div>
                 </div>
             </div>
