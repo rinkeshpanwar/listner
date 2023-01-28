@@ -1,6 +1,7 @@
 import React from 'react'
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router'
+import RichTextEditor from '../component/richTextEditor';
 import Searchbar from '../component/searchbar'
 import { Paths } from '../route/paths';
 import { searchSlice } from '../slice/searchSlice';
@@ -16,7 +17,10 @@ function Home() {
   return (
     <div>
       <div className='h-screen flex justify-center items-center'>
-      <Searchbar onSearch={handleSearch}/>
+        <RichTextEditor />
+      </div>
+      <div className='h-screen flex justify-center items-center'>
+        <Searchbar onSearch={handleSearch}/>
       </div>
     </div>
   )

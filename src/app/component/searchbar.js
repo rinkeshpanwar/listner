@@ -2,9 +2,10 @@ import React from 'react'
 import { Button, ButtonGroup, Typography } from '@mui/material'
 import  {BiSearchAlt} from 'react-icons/bi'
 import { Box } from '@mui/system';
+import { isEmpty } from 'lodash';
 
 function Searchbar({onSearch}) {
-    const [search,setSearch] = React.useState('');
+    const [search, setSearch] = React.useState('');
     return (
         <div className='w-1/2'>
             <form onSubmit={(e) => {
@@ -24,7 +25,7 @@ function Searchbar({onSearch}) {
                     </Button>
                 </ButtonGroup>
                 <Box>
-                    <Typography  className='font-secondary mt-1 font-medium text-primary_black'>
+                    <Typography disable={isEmpty(search)} className='font-secondary mt-1 font-medium text-primary_black'>
                         Search for your question...
                     </Typography>
                 </Box>
