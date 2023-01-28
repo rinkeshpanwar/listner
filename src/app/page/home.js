@@ -20,15 +20,15 @@ function Home() {
       setNotifySearch(true);
     }
   }
-  return (
-    <div>
+  return (<>
       <Snackbar open={notifySearch}
-      autoHideDuration={3000}
-      onClose={() => setNotifySearch(false)}
-      anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'top',
-      }}>
+        autoHideDuration={3000}
+        onClose={() => setNotifySearch(false)}
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'top',
+        }}
+      >
         <div className='font-secondary w-screen md:w-1/5 bg-red-400 font-medium text-sm px-5 py-3 rounded-md text-white'>
           Enter the search query.
         </div>
@@ -36,7 +36,7 @@ function Home() {
       <div className='h-screen flex justify-center items-center'>
         <Searchbar onSearch={handleSearch}/>
       </div>
-    </div>
+    </>
   )
 }
 
