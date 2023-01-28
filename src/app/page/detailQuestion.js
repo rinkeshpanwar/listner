@@ -1,6 +1,7 @@
 import { Button } from '@mui/material';
 import { intervalToDuration } from 'date-fns';
 import React from 'react';
+import { BiDownvote, BiUpvote } from 'react-icons/bi';
 
 function TimeCalculator({start, end, maxElement = 2}) {
     let totalElement = 0;
@@ -55,7 +56,29 @@ function DetailQuestion() {
                 <span className='font-primary text-gray-500 font-normal'>Modified</span>
                 <TimeCalculator start={new Date()} end={new Date(2022, 10, 10)} maxElement={1}/>
             </div>
-            <span className='font-primary text-gray-500 font-normal'>Viewed</span>
+            <div className='flex flex-col items-center'>
+                <span className='font-primary text-gray-500 font-normal'>Viewed</span>
+                {new Intl.NumberFormat().format(1000000)} Times
+            </div>
+        </div>
+        <hr className='my-3 '/>
+        <div className='flex gap-8'>
+            <div className='w-[3%] flex flex-col items-center gap-2 font-secondary cursor-pointer'>
+                <BiUpvote className='text-4xl text-green-500 '/>
+                <span className='font-primary text-zinc-600 font-normal'>Vote</span>
+                <BiDownvote className='text-4xl text-red-500 cursor-pointer'/>
+            </div>
+            <div className='w-[70%] font-primary text-neutral-900 flex-shrink'>
+                <div className='px-4'>lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc ut aliquam aliquam, nunc ni</div>
+                <div className='mt-3 px-4 py-7 rounded-md bg-slate-300 max-h-screen overflow-auto max-w-full scroll-smooth'>
+                    lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc ut aliquam aliquam, nunc nisl aliquet nisl, nec aliquet nunc nisl sit amet lorem. Sed euismod, nunc ut aliquam aliquam, nunc nisl aliquet nisl, nec aliquet nunc nisl sit amet lorem. Sed euismod, nunc ut aliquam aliquam, nunc nisl aliquet nisl, nec aliquet nunc nisl sit amet lorem. Sed euismod, nunc ut aliquam aliquam, nunc nisl aliquet nisl, nec aliquet nunc nisl sit amet lorem. Sed euismod, nunc ut aliquam aliquam, nunc nisl aliquet nisl, nec aliquet nunc nisl sit amet lorem. Sed euismod, nunc ut aliquam aliquam, nunc nisl aliquet nisl, nec aliquet nunc nisl sit amet lorem. Sed euismod, nunc ut aliquam aliquam, nunc nisl aliquet nisl, nec aliquet nunc nisl sit amet lorem. Sed euismod, nunc ut aliquam aliquam, nunc nisl aliquet nisl, nec aliquet nunc nisl sit amet lorem. Sed euismod, nunc ut aliquam aliquam, nunc nisl aliquet nisl, nec aliquet nunc nisl sit amet lorem. Sed euismod, nunc ut aliquam aliquam, nunc nisl aliquet nisl, nec aliquet nunc nisl sit amet lorem. Sed euismod, nunc ut aliquam aliquam, nunc nisl aliquet nisl, nec aliquet nunc nisl sit amet lorem. Sed euismod, nunc ut aliquam aliquam, nunc nisl aliquet nisl, nec aliquet nunc nisl sit amet lorem. Sed euismod, nunc ut aliquam aliquam, nunc nisl aliquet nisl, nec aliquet nunc nisl sit amet lorem. Sed euismod, nunc ut aliquam aliquam, nunc nisl aliquet nisl, nec aliquet nunc nisl sit amet lorem. Sed euismod, nunc ut aliquam aliquam, nunc nisl aliquet nisl, nec aliquet nunc nisl
+                    lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc ut aliquam aliquam, nunc nisl aliquet nisl, nec aliquet nunc nisl sit amet lorem. Sed euismod, nunc ut aliquam aliquam, nunc nisl aliquet nisl, nec aliquet nunc nisl sit amet lorem. Sed euismod, nunc ut aliquam aliquam, nunc nisl aliquet nisl, nec aliquet nunc nisl sit amet lorem. Sed euismod, nunc ut aliquam aliquam, nunc nisl aliquet nisl, nec aliquet nunc nisl sit amet lorem. Sed euismod, nunc ut aliquam aliquam, nunc nisl aliquet nisl, nec aliquet nunc nisl sit amet lorem. Sed euismod, nunc ut aliquam aliquam, nunc nisl aliquet nisl, nec aliquet nunc nisl sit amet lorem. Sed euismod, nunc ut aliquam aliquam, nunc nisl aliquet nisl, nec aliquet nunc nisl sit amet lorem. Sed euismod, nunc ut aliquam aliquam, nunc nisl aliquet nisl, nec aliquet nunc nisl sit amet lorem. Sed euismod, nunc ut aliquam aliquam, nunc nisl aliquet nisl, nec aliquet nunc nisl sit amet lorem. Sed euismod, nunc ut aliquam aliquam, nunc nisl aliquet nisl, nec aliquet nunc nisl sit amet lorem. Sed euismod, nunc ut aliquam aliquam, nunc nisl aliquet nisl, nec aliquet nunc nisl sit amet lorem. Sed euismod, nunc ut aliquam aliquam, nunc nisl aliquet nisl, nec aliquet nunc nisl sit amet lorem. Sed euismod, nunc ut aliquam aliquam, nunc nisl aliquet nisl, nec aliquet nunc nisl sit amet lorem. Sed euismod, nunc ut aliquam aliquam, nunc nisl aliquet nisl, nec aliquet nunc nisl sit amet lorem. Sed euismod, nunc ut aliquam aliquam, nunc nisl aliquet nisl, nec aliquet nunc nisl
+                    lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc ut aliquam aliquam, nunc nisl aliquet nisl, nec aliquet nunc nisl sit amet lorem. Sed euismod, nunc ut aliquam aliquam, nunc nisl aliquet nisl, nec aliquet nunc nisl sit amet lorem. Sed euismod, nunc ut aliquam aliquam, nunc nisl aliquet nisl, nec aliquet nunc nisl sit amet lorem. Sed euismod, nunc ut aliquam aliquam, nunc nisl aliquet nisl, nec aliquet nunc nisl sit amet lorem. Sed euismod, nunc ut aliquam aliquam, nunc nisl aliquet nisl, nec aliquet nunc nisl sit amet lorem. Sed euismod, nunc ut aliquam aliquam, nunc nisl aliquet nisl, nec aliquet nunc nisl sit amet lorem. Sed euismod, nunc ut aliquam aliquam, nunc nisl aliquet nisl, nec aliquet nunc nisl sit amet lorem. Sed euismod, nunc ut aliquam aliquam, nunc nisl aliquet nisl, nec aliquet nunc nisl sit amet lorem. Sed euismod, nunc ut aliquam aliquam, nunc nisl aliquet nisl, nec aliquet nunc nisl sit amet lorem. Sed euismod, nunc ut aliquam aliquam, nunc nisl aliquet nisl, nec aliquet nunc nisl sit amet lorem. Sed euismod, nunc ut aliquam aliquam, nunc nisl aliquet nisl, nec aliquet nunc nisl sit amet lorem. Sed euismod, nunc ut aliquam aliquam, nunc nisl aliquet nisl, nec aliquet nunc nisl sit amet lorem. Sed euismod, nunc ut aliquam aliquam, nunc nisl aliquet nisl, nec aliquet nunc nisl sit amet lorem. Sed euismod, nunc ut aliquam aliquam, nunc nisl aliquet nisl, nec aliquet nunc nisl sit amet lorem. Sed euismod, nunc ut aliquam aliquam, nunc nisl aliquet nisl, nec aliquet nunc nisl
+                </div>
+            </div>
+            <div className='bg-red-400 w-[26%]'>
+                suggestion
+            </div>
         </div>
     </div>
   )
