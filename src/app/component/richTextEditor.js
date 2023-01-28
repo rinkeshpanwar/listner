@@ -4,6 +4,7 @@ import { FaBold, FaItalic, FaUnderline } from 'react-icons/fa'
 import {BsListUl} from 'react-icons/bs'
 import {AiOutlineOrderedList} from 'react-icons/ai'
 import {BsTextIndentLeft} from 'react-icons/bs'
+import proptype from 'prop-types'
 
 function RichTextEditor() {
     const [boldActive, setBoldActive] = React.useState(false);
@@ -14,13 +15,11 @@ function RichTextEditor() {
     const editorRef = React.useRef(null);
 
     function checkAndUpdateStates() {
-        console.log("Checking");
         const boldState = document.queryCommandState('bold');
         const italicState = document.queryCommandState('italic');
         const underlineState = document.queryCommandState('underline');
         const listState = document.queryCommandState('insertUnorderedList');
         const orderedListState = document.queryCommandState('insertOrderedList');
-        const indentState = document.queryCommandState('indent');
         setListActive(listState);
         setUnderlineActive(underlineState);
         setItalicActive(italicState);
@@ -28,24 +27,30 @@ function RichTextEditor() {
         setOrderedListActive(orderedListState);
         editorRef.current.focus();
     }
+
     function exeCommand(command, ui, value) {
         document.execCommand(command, ui, value);
         checkAndUpdateStates();
     }
 
+    function submitHandler() {
+        props.submitHandler(editorRef.current.innerHTML);
+    }
+
     React.useEffect(() => {
-        ['selectionchange','keyup', 'mouseup'].forEach((e) => window.addEventListener(e, checkAndUpdateStates));
+        ['selectionchange','keyup', 'mouseup'].forEach((e) => editorRef.current.addEventListener(e, checkAndUpdateStates));
         return () => {
-            ['selectionchange','keyup', 'mouseup'].forEach((e) => window.removeEventListener(e, checkAndUpdateStates));
+            ['selectionchange','keyup', 'mouseup'].forEach((e) => editorRef.current.removeEventListener(e, checkAndUpdateStates));
+            editorRef.current.innerHTML = "";
         }
     },[])
+
     return (
         <div className='w-full'>
-            <h1>Rich Text Editor</h1>
             <div ref={editorRef} className='list-disc font-primary text-sm w-full min-h-[300px] overflow-auto max-h-96 bg-gray-200 rounded-md outline-none px-5 py-3' autoCorrect='false' contentEditable={true} >
             </div>
-            <div className='mt-3 flex justify-between items-center ml-5'>
-                <div className='flex gap-0-5'>    
+            <div className='mt-3 flex justify-between items-center gap-24'>
+                <div className='flex gap-5'>    
                     <Button onClick={() =>{
                         exeCommand('bold', false, null);
                     }} className={` ${boldActive?"bg-slate-300 text-neutral-700" : "bg-slate-50 text-neutral-600"} hover:bg-slate-200 outline-none border-none text-lg py-1  shadow-none `} >
@@ -80,13 +85,16 @@ function RichTextEditor() {
                         <BsTextIndentLeft />
                     </Button>
                 </div>
-                <div className='space-x-3 font-primary'>
-                    <Button>Reset</Button>
-                    <Button>Save</Button>
+                <div className='space-x-3'>
+                    <Button onClick={() => editorRef.current.innerHTML=""} className='transition-all hover:-translate-y-1 bg-slate-50 font-primary bg-opacity-80 font-medium rounded-full px-7 shadow-md inline-flex items-center'>Reset</Button>
+                    <Button onClick={submitHandler} className='transition-all hover:-translate-y-1 bg-violet-600 font-primary hover:bg-violet-600 hover:text-white text-white font-medium rounded-full px-7 shadow-md inline-flex items-center'>Save</Button>
                 </div>
             </div>
         </div>
     )
 }
 
+RichTextEditor.propTypes = {
+    submitHandler: proptype.func.isRequired
+}
 export default RichTextEditor
