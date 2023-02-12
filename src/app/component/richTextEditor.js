@@ -6,7 +6,7 @@ import {AiOutlineOrderedList} from 'react-icons/ai'
 import {BsTextIndentLeft} from 'react-icons/bs'
 import proptype from 'prop-types'
 
-function RichTextEditor() {
+function RichTextEditor(props) {
     const [boldActive, setBoldActive] = React.useState(false);
     const [italicActive, setItalicActive] = React.useState(false);
     const [underlineActive, setUnderlineActive] = React.useState(false);
@@ -39,17 +39,13 @@ function RichTextEditor() {
 
     React.useEffect(() => {
         ['selectionchange','keyup', 'mouseup'].forEach((e) => editorRef.current.addEventListener(e, checkAndUpdateStates));
-        return () => {
-            ['selectionchange','keyup', 'mouseup'].forEach((e) => editorRef.current.removeEventListener(e, checkAndUpdateStates));
-            editorRef.current.innerHTML = "";
-        }
     },[])
 
     return (
         <div className='w-full'>
-            <div ref={editorRef} className='list-disc font-primary text-sm w-full min-h-[300px] overflow-auto max-h-96 bg-gray-200 rounded-md outline-none px-5 py-3' autoCorrect='false' contentEditable={true} >
+            <div ref={editorRef} className='list-disc font-primary text-sm w-full min-h-[300px] overflow-auto max-h-96 bg-gray-200 rounded-md outline-none px-5 py-3' spellCheck='false' autoCorrect='false' contentEditable={true} >
             </div>
-            <div className='mt-3 flex justify-between items-center gap-24'>
+            <div className='mt-3 flex justify-between font-primary items-center gap-24'>
                 <div className='flex gap-5'>    
                     <Button onClick={() =>{
                         exeCommand('bold', false, null);
@@ -86,8 +82,9 @@ function RichTextEditor() {
                     </Button>
                 </div>
                 <div className='space-x-3'>
-                    <Button onClick={() => editorRef.current.innerHTML=""} className='transition-all hover:-translate-y-1 bg-slate-50 font-primary bg-opacity-80 font-medium rounded-full px-7 shadow-md inline-flex items-center'>Reset</Button>
-                    <Button onClick={submitHandler} className='transition-all hover:-translate-y-1 bg-violet-600 font-primary hover:bg-violet-600 hover:text-white text-white font-medium rounded-full px-7 shadow-md inline-flex items-center'>Save</Button>
+                    <Button onClick={() => editorRef.current.innerHTML=""} className='transition-all  bg-slate-50 font-primary bg-opacity-80 font-medium rounded-full px-7 shadow-md inline-flex items-center'>Reset</Button>
+                    <Button onClick={submitHandler} className='transition-all  bg-violet-600 font-primary hover:bg-violet-600 hover:text-white text-white font-medium rounded-full px-7 shadow-md inline-flex items-center'>Save</Button>
+                    <Button onClick={props.closeHandler} className='transition-all  bg-red-600 font-primary hover:bg-red-600 hover:text-white text-white font-medium rounded-full px-7 shadow-md inline-flex items-center'>Close</Button>
                 </div>
             </div>
         </div>

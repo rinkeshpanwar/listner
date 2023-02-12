@@ -22,4 +22,5 @@ module.exports = {
       addVariant('child-active', '& > *:active');  
     }
   ],
+  mode: 'jit',
 }
