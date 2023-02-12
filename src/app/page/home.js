@@ -26,7 +26,7 @@ function Home() {
         onClose={() => setNotifySearch(false)}
         anchorOrigin={{
           vertical: 'top',
-          horizontal: 'top',
+          horizontal: 'center',
         }}
       >
         <div className='font-secondary w-screen md:w-1/5 bg-red-400 font-medium text-sm px-5 py-3 rounded-md text-white'>
