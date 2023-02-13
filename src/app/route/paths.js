@@ -3,5 +3,5 @@ export const Paths = {
     LOGIN: '/login',
     DEFAULT: '*',
     SEARCH_RESULT: '/search',
-    DETAIL_QUESTION: '/question/:id',
+    DETAIL_QUESTION: '/question/:id'
 }
