@@ -3,11 +3,19 @@ import { Button, Drawer, TextField } from '@mui/material'
 import { Outlet, useNavigate } from 'react-router-dom'
 import { Paths } from '../route/paths'
 import RichTextEditor from './richTextEditor'
+import { useSelector } from 'react-redux'
 
 function Navbar() {
     const [openDrawer, setOpenDrawer] = React.useState(false)
     const [question, setQuestion] = React.useState('')
+    const authState = useSelector(state => state.auth)
     const navigate = useNavigate()
+
+    React.useEffect(() => {
+        if (!authState.data) {
+            navigate(Paths.LOGIN)
+        }
+    })
     function submitHandler(html) {
         console.log(html)
     }
