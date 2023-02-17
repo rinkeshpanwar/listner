@@ -1,21 +1,33 @@
 import { Modal } from '@mui/material';
 import React from 'react'
-import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate, useParams } from 'react-router-dom';
 import SearchCard from '../component/searchCard';
 import SearchLoader, { SkeleotonPopularQuestion } from '../component/searchLoader';
 import { Paths } from '../route/paths';
+import { searchSlice, searchThunk } from '../slice/searchSlice';
 
 function SearchResult() {
+    const {searchString} = useParams();
     const [advanceSearchPopup, setAdvaceSearchPopup] = React.useState(false);
     const searchState = useSelector((state) => state.search);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     React.useEffect(() => {
-        if (searchState.search === "") {
+        if (decodeURIComponent(searchString) === "") {
             navigate(Paths.HOME);
         }
     });
+
+    React.useEffect(() => {
+        dispatch(searchSlice.actions.setSearch(decodeURIComponent(searchString)));
+        dispatch(searchThunk(decodeURIComponent(searchString)));
+        return () => {
+            dispatch(searchSlice.actions.setSearch(""));
+        }
+    }, [decodeURIComponent(searchString)]);
+
     return (
         <div className='w-full'>
             <div className='flex justify-between font-primary px-10 mt-10'>

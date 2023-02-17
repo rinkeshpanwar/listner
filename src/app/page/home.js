@@ -1,21 +1,16 @@
 import React from 'react';
 import { Snackbar } from '@mui/material';
 import { isEmpty } from 'lodash';
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
 import Searchbar from '../component/searchbar'
-import { Paths } from '../route/paths';
-import { searchSlice } from '../slice/searchSlice';
 
 function Home() {
   const [notifySearch, setNotifySearch] = React.useState(false);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   function handleSearch(value) {
     if (!isEmpty(value)){
-      dispatch(searchSlice.actions.setSearch(value));
-      navigate(Paths.SEARCH_RESULT);
+      navigate(`/search/${encodeURIComponent(value)}`);
     } else {
       setNotifySearch(true);
     }
