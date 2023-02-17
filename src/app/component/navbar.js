@@ -22,7 +22,7 @@ function Navbar() {
             navigate(Paths.LOGIN)
         }
     })
-    async function submitHandler(html) {
+    async function submitHandler(html, text) {
         if (loading) {
             return
         }
@@ -31,7 +31,8 @@ function Navbar() {
         setSuccess(false)
         const data = {
             title: question,
-            description: html
+            description: html,
+            description_text_tag: text.replace( /\n/g, " " ).split( " " )
         }
         const response = await dispatch(createQuestionThunk(data))
         if (response.meta.requestStatus === 'fulfilled') {
@@ -69,22 +70,22 @@ function Navbar() {
     </Snackbar>
         {/* error snack bar */}
         <Snackbar
-                open={error}
-                autoHideDuration={6000}
-                onClose={() => setError(false)}
-                anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'right',
-                }}
-                >
-                <div className='bg-red-500 font-primary px-10 py-3 flex items-center gap-10 text-white p-2 rounded-md'>
-                    <div>
-                        There was an error posting your question please try again later...
-                    </div>
-                    <div className='cursor-pointer' onClick={() => setError(false)}>
-                        <VscChromeClose />
-                    </div>
+            open={error}
+            autoHideDuration={6000}
+            onClose={() => setError(false)}
+            anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'right',
+            }}
+            >
+            <div className='bg-red-500 font-primary px-10 py-3 flex items-center gap-10 text-white p-2 rounded-md'>
+                <div>
+                    There was an error posting your question please try again later...
                 </div>
+                <div className='cursor-pointer' onClick={() => setError(false)}>
+                    <VscChromeClose />
+                </div>
+            </div>
             </Snackbar>
         <div className='w-full shadow-md h-14 flex justify-between pl-16 pr-14 items-center'>
             <button className='text-purple-800 font-primary font-semibold tracking-wider' onClick={() => navigate(Paths.HOME)}>

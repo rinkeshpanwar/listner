@@ -34,7 +34,7 @@ function RichTextEditor(props) {
     }
 
     function submitHandler() {
-        props.submitHandler(editorRef.current.innerHTML);
+        props.submitHandler(editorRef.current.innerHTML, editorRef.current.innerText);
     }
 
     React.useEffect(() => {
