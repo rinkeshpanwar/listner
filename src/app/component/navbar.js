@@ -1,13 +1,19 @@
 import React from 'react'
-import { Button, Drawer, TextField } from '@mui/material'
+import { Button, Drawer, Snackbar, TextField } from '@mui/material'
 import { Outlet, useNavigate } from 'react-router-dom'
 import { Paths } from '../route/paths'
 import RichTextEditor from './richTextEditor'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { createQuestionThunk } from '../slice/questionSlice'
+import { VscChromeClose } from "react-icons/vsc";
 
 function Navbar() {
     const [openDrawer, setOpenDrawer] = React.useState(false)
     const [question, setQuestion] = React.useState('')
+    const [loading, setLoading] = React.useState(false)
+    const [error, setError] = React.useState(false)
+    const [success, setSuccess] = React.useState(false)
+    const dispatch = useDispatch()
     const authState = useSelector(state => state.auth)
     const navigate = useNavigate()
 
@@ -16,8 +22,26 @@ function Navbar() {
             navigate(Paths.LOGIN)
         }
     })
-    function submitHandler(html) {
-        console.log(html)
+    async function submitHandler(html) {
+        if (loading) {
+            return
+        }
+        setLoading(true)
+        setError(false)
+        setSuccess(false)
+        const data = {
+            title: question,
+            description: html
+        }
+        const response = await dispatch(createQuestionThunk(data))
+        if (response.meta.requestStatus === 'fulfilled') {
+            setSuccess(true)
+            setOpenDrawer(false)
+        }
+        if (response.meta.requestStatus === 'rejected') {
+            setError(true)
+        }
+        setLoading(false)
     }
     React.useEffect(() => {
         setQuestion('')
@@ -25,6 +49,43 @@ function Navbar() {
 
     return (
     <>
+    <Snackbar
+        open={success}
+        autoHideDuration={6000}
+        onClose={() => setSuccess(false)}
+        anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'right',
+        }}
+        >
+        <div className='bg-green-500 font-primary px-10 py-3 flex items-center gap-10 text-white p-2 rounded-md'>
+            <div>
+                Succesfully posted question
+            </div>
+            <div className='cursor-pointer' onClick={() => setSuccess(false)}>
+                <VscChromeClose />
+            </div>
+        </div>
+    </Snackbar>
+        {/* error snack bar */}
+        <Snackbar
+                open={error}
+                autoHideDuration={6000}
+                onClose={() => setError(false)}
+                anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'right',
+                }}
+                >
+                <div className='bg-red-500 font-primary px-10 py-3 flex items-center gap-10 text-white p-2 rounded-md'>
+                    <div>
+                        There was an error posting your question please try again later...
+                    </div>
+                    <div className='cursor-pointer' onClick={() => setError(false)}>
+                        <VscChromeClose />
+                    </div>
+                </div>
+            </Snackbar>
         <div className='w-full shadow-md h-14 flex justify-between pl-16 pr-14 items-center'>
             <button className='text-purple-800 font-primary font-semibold tracking-wider' onClick={() => navigate(Paths.HOME)}>
                 Listner

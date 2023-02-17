@@ -17,7 +17,7 @@ export const loginThunk = createAsyncThunk("loginThunk", async (payload, thunkAP
                 "Content-Type": "multipart/form-data"
             }
         });
-        localStorage.setItem("token", response.data);
+        localStorage.setItem("token", JSON.stringify(response.data));
         return response.data;
     }
     catch (error) {
@@ -32,7 +32,7 @@ export const authSlice = createSlice({
         autoLogin: (state, action) => {
             const data = localStorage.getItem("token");
             if (data) {
-                state.data = data;
+                state.data = JSON.parse(data);
                 state.loading = false;
                 state.error = false;
             } else {
