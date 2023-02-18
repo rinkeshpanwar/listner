@@ -2,6 +2,8 @@ import { Modal } from '@mui/material';
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
+import Error from '../component/error';
+import Loader from '../component/loader';
 import SearchCard from '../component/searchCard';
 import SearchLoader, { SkeleotonPopularQuestion } from '../component/searchLoader';
 import { Paths } from '../route/paths';
@@ -14,7 +16,7 @@ function SearchResult() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    React.useEffect(() => {
+    React.useLayoutEffect(() => {
         if (decodeURIComponent(searchString) === "") {
             navigate(Paths.HOME);
         }
@@ -27,13 +29,21 @@ function SearchResult() {
             dispatch(searchSlice.actions.setSearch(""));
         }
     }, [decodeURIComponent(searchString)]);
-
+    if (searchState.loading) {
+        return <div className='flex h-[calc(100vh-30vh)] justify-center items-center'>
+            <Loader />
+        </div>;
+    }
+    if (searchState.error) {
+        return <div className='flex h-[calc(100vh-30vh)]justify-center items-center'>
+            <Error />
+        </div>;
+    }
     return (
         <div className='w-full'>
             <div className='flex justify-between font-primary px-10 mt-10'>
-                <p className='line-clamp-1 text-lg'>Search Result &ldquo; <span className='italic'>{searchState.search}</span> &rdquo;</p>
+                <p className='line-clamp-1 text-lg'>Search Result &ldquo;<span className='italic font-secondary text-violet-900 font-bold'>{searchState.search}</span> &rdquo;</p>
                 <button className='text-indigo-400 text-lg' onClick={() => setAdvaceSearchPopup((prev) => !prev)}>
-                    Advance search 
                 </button>
                 <Modal open={advanceSearchPopup} onClose={() => setAdvaceSearchPopup(false)}>
                     <div>
@@ -43,11 +53,7 @@ function SearchResult() {
             </div>
             <div className='flex pr-10 lg:pr-0 pl-10 mt-5 gap-4 lg:gap-10 flex-wrap lg:flex-nowrap'>
                 <div className='lg:w-[83%] space-y-8'>
-                    {
-                        searchState.loading ?
-                            Array(6).fill(0).map((_, index) => <SearchLoader key={index+"_loader"} />)
-                            : <SearchCard />
-                    }
+                    {searchState.data?._items?.map((element) => <SearchCard key={element.key} {...element}/> )}
                 </div>
                 <div className='w-full lg:w-[27%]'>
                     <div className='font-primary mt-2 font-medium text-lg'>Popular questions</div>

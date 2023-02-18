@@ -6,6 +6,7 @@ import { loginThunk } from '../slice/authSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Paths } from '../route/paths';
+import Loader from '../component/loader';
 
 function Login() {
     const [username, setUsername] = React.useState('')
@@ -75,8 +76,7 @@ function Login() {
             </Snackbar>
             {/* loder spinner */}
             <div className={`flex justify-center items-center mb-4 ${authState.loading ? "visible": "invisible"}`}>
-                <div className='animate-spin rounded-full h-10 w-10 border-b-2 border-primary_black'>
-            </div>
+                <Loader />
             </div>            
             {/* login form */}
             <form className='flex font-primary flex-col w-1/3 bg-white rounded-md shadow-lg p-10' onSubmit={loginHandler}>
