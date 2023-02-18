@@ -40,9 +40,9 @@ function SearchResult() {
         </div>;
     }
     return (
-        <div className='w-full'>
+        <div className='w-full' >
             <div className='flex justify-between font-primary px-10 mt-10'>
-                <p className='line-clamp-1 text-lg'>Search Result &ldquo;<span className='italic font-secondary text-violet-900 font-bold'>{searchState.search}</span> &rdquo;</p>
+                <p className='line-clamp-1 text-lg'>Search result for &ldquo;<span className='italic font-secondary text-violet-900 font-bold'>{searchState.search}</span> &rdquo;</p>
                 <button className='text-indigo-400 text-lg' onClick={() => setAdvaceSearchPopup((prev) => !prev)}>
                 </button>
                 <Modal open={advanceSearchPopup} onClose={() => setAdvaceSearchPopup(false)}>
@@ -53,7 +53,7 @@ function SearchResult() {
             </div>
             <div className='flex pr-10 lg:pr-0 pl-10 mt-5 gap-4 lg:gap-10 flex-wrap lg:flex-nowrap'>
                 <div className='lg:w-[83%] space-y-8'>
-                    {searchState.data?._items?.map((element) => <SearchCard key={element.key} {...element}/> )}
+                    {searchState.data?._items?.map((element) => <SearchCard id={element.key} key={element.key} {...element}/> )}
                 </div>
                 <div className='w-full lg:w-[27%]'>
                     <div className='font-primary mt-2 font-medium text-lg'>Popular questions</div>

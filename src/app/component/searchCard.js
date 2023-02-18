@@ -1,11 +1,13 @@
 import React from 'react'
 import {BiDownvote, BiUpvote} from 'react-icons/bi'
 import propTypes from 'prop-types'
+import { useNavigate } from 'react-router-dom'
 
 function SearchCard(props) {
+  const navigate = useNavigate()
   return (
     <div className='w-full'>
-        <div className='flex'>
+        <div className='flex' onClick={() => navigate(`/question/${props.id}`)}>
             <p className='font-primary line-clamp-1 font-medium text-lg text-primary_black cursor-pointer'>{props.title}</p>
             <div className='rounded-sm ml-2 text-primary_white font-primary px-2 text-lg cursor-pointer bg-green-600'>Accepted</div>
         </div>
@@ -13,7 +15,7 @@ function SearchCard(props) {
             <div className='line-clamp-3' dangerouslySetInnerHTML={{__html : props.description}}>
             </div>
         </div>
-        <div className='mt-3 flex items-center'>
+        <div className='mt-3 flex items-center' onClick={() => navigate(`/question/${props.key}`)}>
             <div className='line-clamp-1 space-x-2'>
                 {
                     props.description_text_tag?.map((element) => 
@@ -33,6 +35,7 @@ function SearchCard(props) {
 }
 
 SearchCard.propType = {
+    id: propTypes.string,
     title: propTypes.string,
     description: propTypes.string,
     tags: propTypes.array,
