@@ -46,7 +46,7 @@ function RichTextEditor(props) {
             <div ref={editorRef} className='list-disc font-primary text-sm w-full min-h-[300px] overflow-auto max-h-96 bg-gray-200 rounded-md outline-none px-5 py-3' spellCheck='false' autoCorrect='false' contentEditable={true} >
             </div>
             <div className='mt-3 flex justify-between font-primary items-center gap-24'>
-                <div className='flex gap-5'>    
+                <div className='flex gap-1 flex-shrink'>    
                     <Button onClick={() =>{
                         exeCommand('bold', false, null);
                     }} className={` ${boldActive?"bg-slate-300 text-neutral-700" : "bg-slate-50 text-neutral-600"} hover:bg-slate-200 outline-none border-none text-lg py-1  shadow-none `} >
@@ -81,7 +81,7 @@ function RichTextEditor(props) {
                         <BsTextIndentLeft />
                     </Button>
                 </div>
-                <div className='space-x-3'>
+                <div className='space-x-2'>
                     <Button onClick={() => editorRef.current.innerHTML=""} className='transition-all  bg-slate-50 font-primary bg-opacity-80 font-medium rounded-full px-7 shadow-md inline-flex items-center'>Reset</Button>
                     <Button onClick={submitHandler} className='transition-all  bg-violet-600 font-primary hover:bg-violet-600 hover:text-white text-white font-medium rounded-full px-7 shadow-md inline-flex items-center'>Save</Button>
                     <Button onClick={props.closeHandler} className='transition-all  bg-red-600 font-primary hover:bg-red-600 hover:text-white text-white font-medium rounded-full px-7 shadow-md inline-flex items-center'>Close</Button>

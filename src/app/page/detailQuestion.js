@@ -8,6 +8,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Paths } from '../route/paths';
 import Loader from '../component/loader';
 import { isEmpty } from 'lodash';
+import RichTextEditor from '../component/richTextEditor';
 
 function TimeCalculator({start, end, maxElement = 2}) {
     let totalElement = 0;
@@ -89,7 +90,10 @@ function DetailQuestion(props) {
         setDownvoteLoading(false);
         setUpdateUi((prev) => !prev);
     }
-    }
+  }
+  async function postAnswer(html, tag) {
+    console.log(html, tag);
+  }
   React.useEffect(() => {
     async function getQuestionData(params) {
         setLoading(true);
@@ -134,7 +138,7 @@ function DetailQuestion(props) {
     return <div>Something went wrong</div>;
   }
   return (
-    <div className='px-10'>
+    <div className='px-10 mb-10'>
         {/* upvote success handler */}
         <Snackbar
             open={upvoteSuccess}
@@ -209,7 +213,12 @@ function DetailQuestion(props) {
                     !isEmpty(data.description) ? <div className=' px-8 py-7 rounded-md bg-slate-300 max-h-screen overflow-auto max-w-full scroll-smooth' dangerouslySetInnerHTML={{__html: data.description}}>
                     </div> : <div className='text-lg text-violet-700 font-secondary font-semibold'>No Description available for this question...</div>
                 }
-                
+                <div className='mt-16'>
+                    <p className='font-primary font-bold text-primary_black text-lg'>Your Answer</p>
+                    <div>
+                        <RichTextEditor submitHandler={postAnswer}/>
+                    </div>
+                </div>
             </div>
             <div className='bg-red-400 w-[26%]'>
                 suggestion
