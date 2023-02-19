@@ -15,7 +15,7 @@ function Router() {
   const authState = useSelector((state) => state.auth);
   React.useEffect(() => {
     dispatch(authSlice.actions.autoLogin())
-  }, [])
+  }, [dispatch])
   if (authState.loading) {
     return <div className='h-screen justify-center items-center'>
       <Loader />

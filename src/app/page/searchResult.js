@@ -5,7 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Error from '../component/error';
 import Loader from '../component/loader';
 import SearchCard from '../component/searchCard';
-import SearchLoader, { SkeleotonPopularQuestion } from '../component/searchLoader';
+import { SkeleotonPopularQuestion } from '../component/searchLoader';
 import { Paths } from '../route/paths';
 import { searchSlice, searchThunk } from '../slice/searchSlice';
 

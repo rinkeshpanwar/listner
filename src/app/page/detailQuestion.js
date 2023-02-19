@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Snackbar } from '@mui/material';
+import { Snackbar } from '@mui/material';
 import { intervalToDuration } from 'date-fns';
 import { BiDownvote, BiUpvote } from 'react-icons/bi';
 import { useDispatch } from 'react-redux';
@@ -287,6 +287,11 @@ function DetailQuestion(props) {
                     {
                         answerLoading && <div className='flex flex-1 justify-center items-center my-2'>
                             <Loader/>
+                            </div>
+                    }
+                    {
+                        availableAnswerError && <div className='flex flex-1 justify-center items-center my-2'>
+                            <p className='text-red-500 font-primary font-semibold'>Failed to load answers</p>
                             </div>
                     }
                     {
