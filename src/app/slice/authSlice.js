@@ -3,7 +3,7 @@ import { api } from "../utils/axios";
 
 const INITIAL_STATE = {
     data: null,
-    loading: false,
+    loading: true,
     error: false
 };
 

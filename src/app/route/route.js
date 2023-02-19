@@ -6,16 +6,28 @@ import SearchResult from '../page/searchResult';
 import { Paths } from './paths';
 import Navbar from '../component/navbar';
 import Login from '../page/login';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { authSlice } from '../slice/authSlice';
+import Loader from '../component/loader';
 
 function Router() {
   const dispatch = useDispatch();
+  const authState = useSelector((state) => state.auth);
   React.useEffect(() => {
     dispatch(authSlice.actions.autoLogin())
   }, [])
+  if (authState.loading) {
+    return <div className='h-screen justify-center items-center'>
+      <Loader />
+    </div>
+  }
+  if (authState.data === null) {
+    return <Routes >
+      <Route path={Paths.LOGIN} element={<Login />} />
+      <Route path={Paths.DEFAULT} element={<Login />} />
+    </Routes>;
+  }
   return <Routes >
-    <Route path={Paths.LOGIN} element={<Login />} />
     <Route element={<Navbar />}>
       <Route path={Paths.HOME} element={<Home />} />
       <Route path={Paths.SEARCH_RESULT} element={<SearchResult />} />
