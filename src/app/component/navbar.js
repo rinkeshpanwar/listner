@@ -5,7 +5,9 @@ import { Paths } from '../route/paths'
 import RichTextEditor from './richTextEditor'
 import { useDispatch, useSelector } from 'react-redux'
 import { createQuestionThunk } from '../slice/questionSlice'
-import { VscChromeClose } from "react-icons/vsc";
+import { VscChromeClose } from "react-icons/vsc"
+import {AiOutlineLogout} from 'react-icons/ai'
+import { authSlice } from '../slice/authSlice'
 
 function Navbar() {
     const [openDrawer, setOpenDrawer] = React.useState(false)
@@ -91,11 +93,16 @@ function Navbar() {
             <button className='text-purple-800 font-primary font-semibold tracking-wider' onClick={() => navigate(Paths.HOME)}>
                 Listner
             </button>
-            <Button
-                onClick={() => setOpenDrawer(!openDrawer)}
-                className='h-fit text-white py-2 px-4 hover:bg-blue-700 font-primary bg-blue-600'>
-                Ask a question
-            </Button>
+            <div className='inline-flex items-center'>
+                <Button
+                    onClick={() => setOpenDrawer(!openDrawer)}
+                    className='h-fit text-white py-2 px-4 hover:bg-blue-700 font-primary bg-blue-600'>
+                    Ask a question
+                </Button>
+                <button className='px-4' onClick={() => dispatch(authSlice.actions.logout())}>
+                    <AiOutlineLogout className='text-red-500' size={23} />
+                </button>
+            </div>
             <Drawer anchor='left' open={openDrawer} onClose={() => setOpenDrawer(false)}>
                 <div className='w-screen lg:w-[calc(100vw-20vw)] h-screen space-y-6 px-9 mt-10'>
                     <div className='font-primary capitalize font-semibold text-primary_black'>

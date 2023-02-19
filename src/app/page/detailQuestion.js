@@ -285,7 +285,7 @@ function DetailQuestion(props) {
                     <p className='font-primary font-bold text-primary_black text-lg'><span className='text-green-500 text-xl font-primary'>{data?.answers?.length} Available</span> Answers</p>
                     <div className='mt-1 h-[1px] bg-gray-400'></div>
                     {
-                        answerLoading && <div className='flex flex-1 justify-center items-center my-2'>
+                        availableAnswerLoading && <div className='flex flex-1 justify-center items-center my-2'>
                             <Loader/>
                             </div>
                     }
@@ -320,9 +320,9 @@ function DetailQuestion(props) {
                     </div>
                 </div>
             </div>
-            <div className='bg-red-400 w-[26%]'>
+            {/* <div className='bg-red-400 w-[26%]'>
                 suggestion
-            </div>
+            </div> */}
         </div>
     </div>
   )

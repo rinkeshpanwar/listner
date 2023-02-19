@@ -17,8 +17,8 @@ function Router() {
     dispatch(authSlice.actions.autoLogin())
   }, [dispatch])
   if (authState.loading) {
-    return <div className='h-screen justify-center items-center'>
-      <Loader />
+    return <div className='h-screen w-screen justify-center items-center'>
+        <Loader />
     </div>
   }
   if (authState.data === null) {
