@@ -3,7 +3,7 @@ import { Button, Snackbar } from '@mui/material';
 import { intervalToDuration } from 'date-fns';
 import { BiDownvote, BiUpvote } from 'react-icons/bi';
 import { useDispatch } from 'react-redux';
-import { downvoteThunk, getQuestionByKeyThunk, upvoteThunk } from '../slice/questionSlice';
+import { downvoteThunk, getAnswerThunk, getQuestionByKeyThunk, postAnswerThunk, upvoteThunk } from '../slice/questionSlice';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Paths } from '../route/paths';
 import Loader from '../component/loader';
@@ -30,13 +30,13 @@ function TimeCalculator({start, end, maxElement = 2}) {
         }
     }
     return (
-        <div className='flex items-center'>
+        <div className='flex items-center '>
             {
                 Object.keys(interValDuration).map((key, index) => {
                     return (
                         <div key={index+"time_calculator"}>
-                            <span className='font-primary text-zinc-800 font-normal'>&nbsp; {interValDuration[key]} </span>
-                            <span className='font-primary text-zinc-800 font-normal'>{key}.</span>
+                            <span className=' font-primary text-md font-semibold text-zinc-800'>&nbsp; {interValDuration[key]} </span>
+                            <span className='font-primary text-md  font-semibold text-zinc-800'>{key}.</span>
                         </div>
                     )
                     })
@@ -59,6 +59,12 @@ function DetailQuestion(props) {
   const [downvoteLoading, setDownvoteLoading] = React.useState(false);
   const [downvoteError, setDownvoteError] = React.useState(false);
   const [updateUi, setUpdateUi] = React.useState(false);
+  const [answerLoading, setAnswerLoading] = React.useState(false);
+  const [answerError, setAnswerError] = React.useState(false);
+  const [answerSuccess, setAnswerSuccess] = React.useState(false);
+  const [availableAnswer, setAvailableAnswer] = React.useState([]);
+  const [availableAnswerLoading, setAvailableAnswerLoading] = React.useState(false);
+  const [availableAnswerError, setAvailableAnswerError] = React.useState(false);
 
   async function upvoteHandler() {
     if (!isEmpty(data) && !upvoteLoading) {
@@ -91,8 +97,40 @@ function DetailQuestion(props) {
         setUpdateUi((prev) => !prev);
     }
   }
+
   async function postAnswer(html, tag) {
-    console.log(html, tag);
+    if (!isEmpty(data) && !answerLoading) {
+        setAnswerLoading(true);
+        setAnswerError(false);
+        setAnswerSuccess(false);
+        const payload = {
+            question_key: data.key,
+            answer: html,
+        };
+        const response = await dispatch(postAnswerThunk(payload));
+        if (response.meta.requestStatus === 'fulfilled') {
+            setAnswerSuccess(true);
+            setAvailableAnswer((prev) => [...prev, response.payload]);
+        } else if (response.meta.requestStatus === 'rejected') {
+            setAnswerError(true);
+        }
+        setAnswerLoading(false);
+    }
+  }
+
+  async function getAvailableAnswer() {
+    if (!isEmpty(data) && !availableAnswerLoading) {
+        setAvailableAnswerLoading(true);
+        setAvailableAnswerError(false);
+        const response = await dispatch(getAnswerThunk(data.key));
+        console.log(response);
+        if (response.meta.requestStatus === 'fulfilled') {
+            setAvailableAnswer(response.payload);
+        } else if (response.meta.requestStatus === 'rejected') {
+            setAvailableAnswerError(true);
+        }
+        setAvailableAnswerLoading(false);
+    }
   }
   React.useEffect(() => {
     async function getQuestionData(params) {
@@ -127,6 +165,12 @@ function DetailQuestion(props) {
             setVote(0);
         }
     } 
+  }, [data]);
+
+  React.useEffect(() => {
+    if (data) {
+        getAvailableAnswer();
+    }
   }, [data]);
 
   if (loading) {
@@ -175,6 +219,25 @@ function DetailQuestion(props) {
                     Downvote failed
                 </div>
         </Snackbar>
+
+        {/* answer success handler */}
+        <Snackbar
+            open={answerSuccess}
+            autoHideDuration={3000}
+            onClose={() => setAnswerSuccess(false)}>
+                <div className='bg-green-500 text-white font-primary font-normal p-2 rounded-md'>
+                    Answer posted successfully
+                </div>
+        </Snackbar>
+        {/* answer error handler */}
+        <Snackbar
+            open={answerError}
+            autoHideDuration={3000}
+            onClose={() => setAnswerError(false)}>
+                <div className='bg-red-500 text-white font-primary font-normal p-2 rounded-md'>
+                    Answer posting failed
+                </div>
+        </Snackbar>
         <div className='flex mt-10 mb-3 font-primary items-start flex-wrap'>
             <p className='font-semibold text-zinc-800'>{data.title}</p>
         </div>  
@@ -182,19 +245,23 @@ function DetailQuestion(props) {
             <div className='flex flex-col items-center'>
                 <span className='font-primary text-gray-500 font-normal'>Asked</span>
                 {!isEmpty(data.created_at) ? <><TimeCalculator start={new Date()} end={new Date(data.created_at)} />
-                <span className='font-primary text-zinc-800 font-normal'>&nbsp;ago</span></> : "NA"}
+                <span className='font-primary text-md font-semibold'>&nbsp;ago</span></> : "NA"}
             </div>
             <div className='flex flex-col items-center'>
                 <span className='font-primary text-gray-500 font-normal'>Modified</span>
-                {!isEmpty(data.updated_at) ? <><TimeCalculator start={new Date()} end={new Date(data.updated_at)} /> </>: "NA"}
+                <span className='text-md font-semibold'>{!isEmpty(data.updated_at) ? <><TimeCalculator start={new Date()} end={new Date(data.updated_at)} /> </>: "NA"}</span>
             </div>
             <div className='flex flex-col items-center'>
                 <span className='font-primary text-gray-500 font-normal'>Viewed</span>
-                {!isEmpty(data.views) ? <>{new Intl.NumberFormat().format(data.views)} Times</>: "0 Times"}
+                <span className='text-md font-semibold'>{!isEmpty(data.views) ? <>{new Intl.NumberFormat().format(data.views)} Times</>: "0 Times"}</span>
             </div>
             <div className='flex flex-col items-center text-violet-800'>
                 <span className='font-primary text-gray-500 font-normal'>Asked By</span>
-                <span className='font-semibold'>{data.username}</span>
+                <span className='font-semibold text-md'>{data.username}</span>
+            </div>
+            <div className='flex flex-col items-center text-violet-800'>
+                <span className='font-primary text-gray-500 font-normal'>Solution Available</span>
+                <span className='font-bold text-md text-green-400'>{!isEmpty(data.answers) ? new Intl.NumberFormat().format(data?.answers?.length ): "0"}</span>
             </div>
         </div>
         <hr className='my-3 '/>
@@ -213,9 +280,37 @@ function DetailQuestion(props) {
                     !isEmpty(data.description) ? <div className=' px-8 py-7 rounded-md bg-slate-300 max-h-screen overflow-auto max-w-full scroll-smooth' dangerouslySetInnerHTML={{__html: data.description}}>
                     </div> : <div className='text-lg text-violet-700 font-secondary font-semibold'>No Description available for this question...</div>
                 }
-                <div className='mt-16'>
+                {/* answer section */}
+                <div className='mt-4'>
+                    <p className='font-primary font-bold text-primary_black text-lg'><span className='text-green-500 text-xl font-primary'>{data?.answers?.length} Available</span> Answers</p>
+                    <div className='mt-1 h-[1px] bg-gray-400'></div>
+                    {
+                        answerLoading && <div className='flex flex-1 justify-center items-center my-2'>
+                            <Loader/>
+                            </div>
+                    }
+                    {
+                        answerError && <div className='flex flex-1 justify-center items-center my-2'>
+                            <p className='text-red-500 font-primary font-semibold'>Failed to load answers</p>
+                            </div> 
+                    }
+                    <div className='flex flex-col'>
+                        {
+                            availableAnswer.length > 0 ? availableAnswer.map((answer) => <div className='font-secondary mt-4 text-primary_black font-semibold' key={answer.key}>
+                                <p className='italic'>Answer By <span className='text-violet-600 font-primary underline'>{answer.username}</span></p>
+                            <div className='bg-gray-200 border rounded-md px-2 py-4 mt-2 font-secondary font-md font-normal' dangerouslySetInnerHTML={{__html: answer.answer}}></div>
+                        </div>) : <p className='text-orange-500 font-lg font-semibold mt-3'>Be the first to answer this question.</p>
+                        }
+                    </div>
+                </div>
+                <div className='mt-12'>
                     <p className='font-primary font-bold text-primary_black text-lg'>Your Answer</p>
-                    <div>
+                    <div className='mt-4'>
+                        {
+                            answerLoading && <div className='flex flex-1 justify-center items-center my-2'>
+                                <Loader/>
+                            </div>
+                        }
                         <RichTextEditor submitHandler={postAnswer}/>
                     </div>
                 </div>
