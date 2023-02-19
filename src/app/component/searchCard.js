@@ -25,9 +25,9 @@ function SearchCard(props) {
             </div>
             <div className="flex items-center min-w-max">
                 <BiUpvote className='ml-3 text-xl text-green-400' />
-                <p className='font-secondary text-base font-medium text-green-600'>{props.upvote}</p>
+                <p className='font-secondary text-base font-medium text-green-600'>{props.upvotes}</p>
                 <BiDownvote className='ml-3 text-xl text-red-400' />
-                <p className='font-secondary text-base text-red-600 font-medium'>{props.downvote}</p>
+                <p className='font-secondary text-base text-red-600 font-medium'>{props.downvotes}</p>
             </div>
         </div>
     </div>
@@ -39,8 +39,8 @@ SearchCard.propType = {
     title: propTypes.string,
     description: propTypes.string,
     tags: propTypes.array,
-    upvote: propTypes.number,
-    downvote: propTypes.number,
+    upvotes: propTypes.number,
+    downvotes: propTypes.number,
     description_text_tag: propTypes.array
 }
 export default SearchCard

@@ -51,8 +51,8 @@ function SearchResult() {
                     </div>
                 </Modal>
             </div>
-            <div className='flex pr-10 lg:pr-0 pl-10 mt-5 gap-4 lg:gap-10 flex-wrap lg:flex-nowrap'>
-                <div className='lg:w-[83%] space-y-8'>
+            {/* <div className='flex pr-10 lg:pr-0 pl-10 mt-5 gap-4 lg:gap-10 flex-wrap lg:flex-nowrap'>
+                <div className='space-y-8'>
                     {searchState.data?._items?.map((element) => <SearchCard id={element.key} key={element.key} {...element}/> )}
                 </div>
                 <div className='w-full lg:w-[27%]'>
@@ -74,6 +74,12 @@ function SearchResult() {
                                 </>
                         }
                     </div>
+                </div>
+            </div>
+            <div> */}
+            <div className='px-10 mt-5'>
+                <div className='space-y-8'>
+                    {searchState.data?._items?.map((element) => <SearchCard id={element.key} key={element.key} {...element}/> )}
                 </div>
             </div>
         </div>
