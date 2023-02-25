@@ -8,6 +8,7 @@ import { createQuestionThunk } from '../slice/questionSlice'
 import { VscChromeClose } from "react-icons/vsc"
 import {AiOutlineLogout} from 'react-icons/ai'
 import { authSlice } from '../slice/authSlice'
+import {IoMdSettings} from 'react-icons/io'
 
 function Navbar() {
     const [openDrawer, setOpenDrawer] = React.useState(false)
@@ -15,6 +16,7 @@ function Navbar() {
     const [loading, setLoading] = React.useState(false)
     const [error, setError] = React.useState(false)
     const [success, setSuccess] = React.useState(false)
+    const [extraDrawer, setExtraDrawer] = React.useState(false)
     const dispatch = useDispatch()
     const authState = useSelector(state => state.auth)
     const navigate = useNavigate()
@@ -102,6 +104,9 @@ function Navbar() {
                 <button className='px-4' onClick={() => dispatch(authSlice.actions.logout())}>
                     <AiOutlineLogout className='text-red-500' size={23} />
                 </button>
+                <button className='px-4 outline-none border-none' onClick={() => setExtraDrawer(!extraDrawer)}>
+                    <IoMdSettings className='text-purple-500 animate-spin duration-75' size={23} />
+                </button>
             </div>
             <Drawer anchor='left' open={openDrawer} onClose={() => setOpenDrawer(false)}>
                 <div className='w-screen lg:w-[calc(100vw-20vw)] h-screen space-y-6 px-9 mt-10'>
@@ -112,6 +117,12 @@ function Navbar() {
                     <div>
                         <RichTextEditor submitHandler={submitHandler} closeHandler={() => setOpenDrawer(false)} />
                     </div>
+                </div>
+            </Drawer>
+            {/* right side drawer */}
+            <Drawer anchor='right' open={extraDrawer} onClose={() => setExtraDrawer(false)}>
+                <div className='w-screen lg:w-[calc(100vw-70vw)] h-screen space-y-6 px-9 mt-10'>
+                    <div>Hello world</div>
                 </div>
             </Drawer>
         </div>

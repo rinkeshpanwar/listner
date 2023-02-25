@@ -9,6 +9,7 @@ import Login from '../page/login';
 import { useDispatch, useSelector } from 'react-redux';
 import { authSlice } from '../slice/authSlice';
 import Loader from '../component/loader';
+import Youtube from '../page/youtube';
 
 function Router() {
   const dispatch = useDispatch();
@@ -32,6 +33,7 @@ function Router() {
       <Route path={Paths.HOME} element={<Home />} />
       <Route path={Paths.SEARCH_RESULT} element={<SearchResult />} />
       <Route path={Paths.DETAIL_QUESTION} element={<DetailQuestion />} />
+      <Route path={Paths.YOUTUBE} element={<Youtube />} />
       <Route path={Paths.DEFAULT} element={<h1>404 not found</h1>} />
     </Route>
   </Routes>;

@@ -1,6 +1,22 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { api } from "../utils/axios";
 
+export const viewThunk = createAsyncThunk("viewThunk", async (questionKey, thunkAPI) => {
+    try {
+        const authState  = thunkAPI.getState().auth;
+        const response = await api.put(`/question/views/${questionKey}`, {} , {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization" : `Bearer ${authState.data.access_token}`
+            }
+        });
+        return response.data;
+    }
+    catch (error) {
+        return thunkAPI.rejectWithValue(error.response.data);
+    }
+});
+
 export const getAnswerThunk = createAsyncThunk("getAnswerThunk", async (questionKey, thunkAPI) => {
     try {
         const authState  = thunkAPI.getState().auth;

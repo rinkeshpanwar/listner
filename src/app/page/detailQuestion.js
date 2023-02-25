@@ -3,7 +3,7 @@ import { Snackbar } from '@mui/material';
 import { intervalToDuration } from 'date-fns';
 import { BiDownvote, BiUpvote } from 'react-icons/bi';
 import { useDispatch } from 'react-redux';
-import { downvoteThunk, getAnswerThunk, getQuestionByKeyThunk, postAnswerThunk, upvoteThunk } from '../slice/questionSlice';
+import { downvoteThunk, getAnswerThunk, getQuestionByKeyThunk, postAnswerThunk, upvoteThunk, viewThunk } from '../slice/questionSlice';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Paths } from '../route/paths';
 import Loader from '../component/loader';
@@ -173,6 +173,9 @@ function DetailQuestion(props) {
     }
   }, [data]);
 
+  React.useEffect(() => {
+    dispatch(viewThunk(id));
+    }, []);
   if (loading) {
     return <div className='flex justify-center items-center h-[calc(100vh-30vh)'>
         <Loader />
@@ -253,7 +256,7 @@ function DetailQuestion(props) {
             </div>
             <div className='flex flex-col items-center'>
                 <span className='font-primary text-gray-500 font-normal'>Viewed</span>
-                <span className='text-md font-semibold'>{!isEmpty(data.views) ? <>{new Intl.NumberFormat().format(data.views)} Times</>: "0 Times"}</span>
+                <span className='text-md font-semibold'>{data.views > 0 ? <>{new Intl.NumberFormat().format(data.views)} Times</>: "0 Times"}</span>
             </div>
             <div className='flex flex-col items-center text-violet-800'>
                 <span className='font-primary text-gray-500 font-normal'>Asked By</span>
