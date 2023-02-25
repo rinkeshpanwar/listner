@@ -5,11 +5,18 @@ const path = require('path');
 const port = process.env.PORT || 4000;
 const convertor = require('./route/convertor');
 
+
 // serve static files
 app.use(express.static(path.join(__dirname, 'build')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// set express cors for all domain
+app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
 app.use("/convert", convertor);
 
 // serve index.html
