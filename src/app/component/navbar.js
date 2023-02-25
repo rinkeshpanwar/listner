@@ -9,6 +9,8 @@ import { VscChromeClose } from "react-icons/vsc"
 import {AiOutlineLogout} from 'react-icons/ai'
 import { authSlice } from '../slice/authSlice'
 import {IoMdSettings} from 'react-icons/io'
+import {ImYoutube2} from 'react-icons/im'
+import {AiOutlineClose} from 'react-icons/ai'
 
 function Navbar() {
     const [openDrawer, setOpenDrawer] = React.useState(false)
@@ -101,11 +103,11 @@ function Navbar() {
                     className='h-fit text-white py-2 px-4 hover:bg-blue-700 font-primary bg-blue-600'>
                     Ask a question
                 </Button>
-                <button className='px-4' onClick={() => dispatch(authSlice.actions.logout())}>
+                <button className='pl-4 pr-3' onClick={() => dispatch(authSlice.actions.logout())}>
                     <AiOutlineLogout className='text-red-500' size={23} />
                 </button>
                 <button className='px-4 outline-none border-none' onClick={() => setExtraDrawer(!extraDrawer)}>
-                    <IoMdSettings className='text-purple-500 animate-spin duration-75' size={23} />
+                    <IoMdSettings className='text-purple-800 animate-[spin_3s_linear_infinite]' size={23} />
                 </button>
             </div>
             <Drawer anchor='left' open={openDrawer} onClose={() => setOpenDrawer(false)}>
@@ -121,8 +123,17 @@ function Navbar() {
             </Drawer>
             {/* right side drawer */}
             <Drawer anchor='right' open={extraDrawer} onClose={() => setExtraDrawer(false)}>
-                <div className='w-screen lg:w-[calc(100vw-70vw)] h-screen space-y-6 px-9 mt-10'>
-                    <div>Hello world</div>
+                <div className='w-screen lg:w-[calc(100vw-70vw)] h-screen space-y-6 mt-10'>
+                    <div className='flex justify-end'>
+                        <AiOutlineClose onClick={() => setExtraDrawer(false)}/>
+                    </div>
+                    <div className='hover:bg-violet-500 flex gap-3 items-center cursor-pointer hover:text-white hover:border-l-2 border-l-violet-800'>
+                        <ImYoutube2 size={23}/> <span>Youtube To Mp3</span>
+                    </div>
+                    <div className='hover:bg-red-200 hover:text-white'>
+                        <AiOutlineLogout size={23} className='text-red-500'/>
+                        <span>Logout</span>
+                    </div>
                 </div>
             </Drawer>
         </div>
