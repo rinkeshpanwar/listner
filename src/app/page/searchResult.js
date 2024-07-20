@@ -79,7 +79,7 @@ function SearchResult() {
             <div> */}
             <div className='px-10 mt-5'>
                 <div className='space-y-8'>
-                    {searchState.data?._items?.map((element) => <SearchCard id={element.key} key={element.key} {...element}/> )}
+                    {searchState.data?.map((element) => <SearchCard id={element.id} key={element.id} {...element}/> )}
                 </div>
             </div>
         </div>

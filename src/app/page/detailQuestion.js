@@ -71,7 +71,7 @@ function DetailQuestion(props) {
         setUpvoteLoading(true);
         setUpvoteError(false);
         setUpvoteSuccess(false);
-        const response = await dispatch(upvoteThunk(data.key));
+        const response = await dispatch(upvoteThunk(data.id));
         if (response.meta.requestStatus === 'fulfilled') {
             setUpvoteSuccess(true);
         } else if (response.meta.requestStatus === 'rejected') {
@@ -87,7 +87,7 @@ function DetailQuestion(props) {
         setDownvoteLoading(true);
         setDownvoteError(false);
         setDownvoteSuccess(false);
-        const response = await dispatch(downvoteThunk(data.key));
+        const response = await dispatch(downvoteThunk(data.id));
         if (response.meta.requestStatus === 'fulfilled') {
             setDownvoteSuccess(true);
         } else if (response.meta.requestStatus === 'rejected') {
@@ -104,7 +104,7 @@ function DetailQuestion(props) {
         setAnswerError(false);
         setAnswerSuccess(false);
         const payload = {
-            question_key: data.key,
+            question_key: data.id,
             answer: html,
         };
         const response = await dispatch(postAnswerThunk(payload));
@@ -122,7 +122,7 @@ function DetailQuestion(props) {
     if (!isEmpty(data) && !availableAnswerLoading) {
         setAvailableAnswerLoading(true);
         setAvailableAnswerError(false);
-        const response = await dispatch(getAnswerThunk(data.key));
+        const response = await dispatch(getAnswerThunk(data.id));
         console.log(response);
         if (response.meta.requestStatus === 'fulfilled') {
             setAvailableAnswer(response.payload);
@@ -305,7 +305,7 @@ function DetailQuestion(props) {
                     <div className='flex flex-col'>
                         {
                             availableAnswer.length > 0 ? availableAnswer.map((answer) => <div className='font-secondary mt-4 text-primary_black font-semibold' key={answer.key}>
-                                <p className='italic'>Answer By <span className='text-violet-600 font-primary underline'>{answer.username}</span></p>
+                                <p className='italic'>Answer By <span className='text-violet-600 font-primary underline'>{answer.user.user_name}</span></p>
                             <div className='bg-gray-200 border rounded-md px-2 py-4 mt-2 font-secondary font-md font-normal' dangerouslySetInnerHTML={{__html: answer.answer}}></div>
                         </div>) : <p className='text-orange-500 font-lg font-semibold mt-3'>Be the first to answer this question.</p>
                         }

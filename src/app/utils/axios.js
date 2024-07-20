@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseURL = "https://listner-1-c8872277.deta.app/";
+const baseURL = "http://localhost:8000";
 
 export const api = axios.create({
     baseURL,
@@ -10,7 +10,7 @@ export const api = axios.create({
 });
 
 export const nodeApi = axios.create({
-    baseURL: window.location.hostname === "localhost" ? "http://localhost:4000" :"",
+    baseURL: window.location.hostname === "localhost" ? "http://localhost:8000" :"",
     headers: {
         "Content-Type": "application/json"
     }
